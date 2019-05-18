@@ -65,7 +65,7 @@ int main()
 	do
 	{
 		if (contador == 3) return 666;
-		printf ("\nIndique su nombre de usuario y su contraseña:  ");
+		printf ("\nIndique su nombre de usuario y su contrase%ca:  ",164);
 		scanf ("%s %s", acceso.usuario, acceso.clave);
 		while (getchar() != '\n');
 
