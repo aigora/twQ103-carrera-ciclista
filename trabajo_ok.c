@@ -1,108 +1,4 @@
-/* VUELTA CICLISTA
-Para probar el programa: compilar y ejecutar, introducir un nombre, apellido y dni (puede ser un simple numero),
-por ejemplo, miguel indurain 123456789, y añadir unos tiempos de carrera,
-posteriormente añadir más corredores y sus tiempos, recomendable añadir mas de 3,
-al añadir 3 o más se pueden realizar todas los operaciones del menu sin que afecte al codigo,
-ya que siendo menos de 3, si queremos eliminar participantes, el podio quedara con participantes eliminados*/
 
-#include<stdio.h>
-#include<string.h>
-#include <time.h> 
-//#include <dos.h>
-
-typedef struct 
-{
-	int horas;
-	int mins;
-	int segundos;
-}tiempo;
-
-typedef struct
-{
-	char nombre[20];
-	char apellido[20];
-	char dni[10];
-	char anfitrion[10];
-	int dorsal;
-	tiempo tiempo;
-}Corredores;
-
-
-
-void menu();
-void print();
-void buscar();
-void tiempos();
-void eliminar();
-void clasificaciones();
-void ordenar();
-void imprimir_tiempos();
-void fin();
-
-
-int main() 
-{ 
-	double op=0;
-	clock_t start, end; 
-	start = clock(); 
-
-	int i,a;
-	Corredores corredores[100];
-	for( i = 0 ; i < 100 ; i++)
-	{
-		corredores[i].nombre[0] = '\0';
-		corredores[i].apellido[0] = '\0';
-		corredores[i].dni[0] = '\0';
-		corredores[i].dorsal = -1;
-		corredores[i].tiempo.horas = 0;
-		corredores[i].tiempo.mins = 0;
-		corredores[i].tiempo.segundos = 0;
-	}
-	menu(corredores);
-	
-	end = clock(); 
-	op=(end - start)/ CLK_TCK;
-	printf("\n\nLa operacion se ha realizado en : %.2f segundos\n\n", op); 
-	system("pause");
-	return;
-}
-
-
-void menu(Corredores *corredores)
-{
-	int opcion;
-	int last_dorsal = 1;
-	printf("PROGRAMA DE GESTION DE LA VUELTA CICLISTA \n");
-
-	do
-	{
-		printf("\nELIJA UNA OPCION\n");
-		printf("1. REGISTRAR UN CORREDOR\n");
-		printf("2. REGISTRAR TIEMPOS\n"); 
-		printf("3. REALIZAR UNA BUSQUEDA POR DORSAL\n");             
-		printf("4. ELIMINAR CORREDOR POR DNI\n");
-		printf("5. CLASIFICACION\n");
-		printf("6. IMPRIMIR TIEMPOS EN FORMATO .txt \n");
-		printf("7. SALIR DEL PROGRAMA\n\n"); 
-		scanf ("%d", &opcion);
-
-		switch(opcion)
-		{
-			case 1:
-			{					
-				printf("Seleccion:1. REGISTRAR UN CORREDOR\n");
-				printf("Introduzca el nombre:\t\t");
-				scanf("%s", corredores[last_dorsal-1].nombre);
-				printf("Introduzca Primer Apellido:\t");
-				scanf("%s", corredores[last_dorsal-1].apellido);
-				printf("Introduzca su DNI:\t\t");
-				scanf("%s", corredores[last_dorsal-1].dni);
-				corredores[last_dorsal-1].dorsal = last_dorsal;
-				printf("Su dorsal es el:\t%d\n", corredores[last_dorsal-1].dorsal);
-				printf("\nCorredor registrado correctamente\n\n");
-				last_dorsal++;
-				break;
-			}
 			case 2:
 			{
 				printf("Seleccion:2. REGISTRAR TIEMPOS\n");
@@ -297,11 +193,11 @@ void clasificaciones(Corredores *corredores, int last_dorsal)
 	{
 		if (corredores[i].dorsal != 0)
 		{
-    		printf("\n\t\t-%dº -> dorsal: %d ", i+1, corredores[i].dorsal);			
+    		printf("\n\t\t-%dÂº -> dorsal: %d ", i+1, corredores[i].dorsal);			
 		}	
 		else if (corredores[i].dorsal == 0)
 		{
-			printf("\n\t\t-%dº -> dorsal: %d (corredor eliminado)", i+1, corredores[i].dorsal);	
+			printf("\n\t\t-%dÂº -> dorsal: %d (corredor eliminado)", i+1, corredores[i].dorsal);	
 		}
     }
     
