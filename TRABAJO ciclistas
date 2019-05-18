@@ -1,3 +1,10 @@
+/* VUELTA CICLISTA
+Para probar el programa: compilar y ejecutar, introducir un nombre, apellido y dni (puede ser un simple numero),
+por ejemplo, miguel indurain 123456789, y añadir unos tiempos de carrera,
+posteriormente añadir más corredores y sus tiempos, recomendable añadir mas de 3,
+al añadir 3 o más se pueden realizar todas los operaciones del menu sin que afecte al codigo,
+ya que siendo menos de 3, si queremos eliminar participantes, el podio quedara con participantes eliminados*/
+
 #include<stdio.h>
 #include<string.h>
 #include <time.h> 
@@ -95,3 +102,4 @@ void menu(Corredores *corredores)
 				last_dorsal++;
 				break;
 			}
+			
