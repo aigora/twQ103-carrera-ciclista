@@ -242,7 +242,7 @@ void eliminar(Corredores *corredores)
 }
 
 
-//coge los datos de los corredores y los ordena de menor a mayor segun su tiempo de carrera
+//coge los datos de los corredores y los ordena de menor a mayor según su tiempo de carrera
 void ordenar (Corredores *corredores, int last_dorsal)
 {
   int i, j, aux;
