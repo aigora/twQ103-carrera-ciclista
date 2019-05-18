@@ -1,14 +1,14 @@
 /* VUELTA CICLISTA
 Para probar el programa: compilar y ejecutar, introducir un nombre, apellido y dni (puede ser un simple numero),
-por ejemplo, miguel indurain 123456789, y aÒadir unos tiempos de carrera,
-posteriormente aÒadir m·s corredores y sus tiempos, recomendable aÒadir mas de 3,
-al aÒadir 3 o m·s se pueden realizar todas los operaciones del menu sin que afecte al codigo,
+por ejemplo, miguel indurain 123456789, y a√±adir unos tiempos de carrera,
+posteriormente a√±adir m√°s corredores y sus tiempos, recomendable a√±adir mas de 3,
+al a√±adir 3 o m√°s se pueden realizar todas los operaciones del menu sin que afecte al codigo,
 ya que siendo menos de 3, si queremos eliminar participantes, el podio quedara con participantes eliminados*/
 
 #include<stdio.h>
 #include<string.h>
 #include <time.h> 
-#include <dos.h>
+#include <dos.h> 
 
 typedef struct 
 {
@@ -142,7 +142,7 @@ void menu(Corredores *corredores)
 			{
 				printf("opcion incorrecta\n\n");
 			}
-			sleep(1);     //permite volver al menu esperando un breve espacio de tiempo
+			sleep(1);     //permite volver al men√∫ esperando un breve espacio de tiempo
 		}
 	} while(opcion!=7);
 }
@@ -157,6 +157,7 @@ void print(Corredores *corredores)
 	printf("Tiempo: %d h %d min %d s\n", corredores[i].tiempo.horas, corredores[i].tiempo.mins, corredores[i].tiempo.segundos);
 	return;
 }
+
 
 
 void buscar(Corredores *corredores)
@@ -302,11 +303,11 @@ void clasificaciones(Corredores *corredores, int last_dorsal)
 	{
 		if (corredores[i].dorsal != 0)
 		{
-    		printf("\n\t-%d∫ -> dorsal: %d ", i+1, corredores[i].dorsal);			
+    		printf("\n\t-%d¬∫ -> dorsal: %d ", i+1, corredores[i].dorsal);			
 		}	
 		else if (corredores[i].dorsal == 0)
 		{
-			printf("\n\t-%d∫ -> dorsal: %d (corredor eliminado)", i+1, corredores[i].dorsal);	
+			printf("\n\t-%d¬∫ -> dorsal: %d (corredor eliminado)", i+1, corredores[i].dorsal);	
 		}
     }
 
