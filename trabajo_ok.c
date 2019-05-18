@@ -3,12 +3,19 @@ Para probar el programa: compilar y ejecutar, introducir un nombre, apellido y d
 por ejemplo, miguel indurain 123456789, y añadir unos tiempos de carrera,
 posteriormente añadir más corredores y sus tiempos, recomendable añadir mas de 3,
 al añadir 3 o más se pueden realizar todas los operaciones del menu sin que afecte al codigo,
-ya que siendo menos de 3, si queremos eliminar participantes, el podio quedara con participantes eliminados*/
+ya que siendo menos de 3, si queremos eliminar participantes, el podio quedara con participantes eliminados
+usuarios con acceso al programa:
+Tcontrasenna autorizado = {"admin", "1234"}; autorizado[1] = {"admin2", "2345"}; autorizado[2] = {"admin3", "3456"}; */
 
 #include<stdio.h>
 #include<string.h>
 #include <time.h> 
-//#include <dos.h>
+
+typedef struct
+{
+	char usuario[25];
+	char clave[20];
+}Tcontrasenna;
 
 typedef struct 
 {
@@ -30,6 +37,7 @@ typedef struct
 
 
 void menu();
+int existeUsuario(Tcontrasenna usuarioValido[], char username[], char password[]);
 void print();
 void buscar();
 void tiempos();
@@ -46,7 +54,33 @@ int main()
 	clock_t start, end; 
 	start = clock(); 
 
-	int i,a;
+	//el programa pide identificacion de usario
+	Tcontrasenna autorizado [3], acceso;
+	int contador = 0, valido, i;
+	
+	strcpy (autorizado[0].usuario, "admin1"); 	strcpy (autorizado[0].clave, "1234"); //Tcontrasenna autorizado = {"admin", "1234"}, acceso;
+	strcpy (autorizado[1].usuario, "admin2"); 	strcpy (autorizado[1].clave, "2345"); //autorizado[1] = {"admin2", "2345"};
+	strcpy (autorizado[2].usuario, "admin3"); 	strcpy (autorizado[2].clave, "3456"); //autorizado[2] = {"admin3", "3456"};
+
+	do
+	{
+		if (contador == 3) return 666;
+		printf ("\nIndique su nombre de usuario y su contraseña:  ");
+		scanf ("%s %s", acceso.usuario, acceso.clave);
+		while (getchar() != '\n');
+
+		valido = existeUsuario(autorizado, acceso.usuario, acceso.clave);
+
+		for (i = 0; i < 3; i++)
+		{
+			valido = strcmp (autorizado[i].usuario, acceso.usuario) ||
+									strcmp (autorizado[i].clave, acceso.clave); 
+			if (valido == 0) break;
+		} 
+		contador++;
+	}	while (valido != 0);
+	
+	int a;
 	Corredores corredores[100];
 	for( i = 0 ; i < 100 ; i++)
 	{
@@ -159,6 +193,19 @@ void print(Corredores *corredores)
 	return;
 }
 
+// funcion qe permite acceder al programa a los usuarios adecuados
+int existeUsuario(Tcontrasenna usuarioValido[], char username[], char password[])
+{
+	int valido, i;
+	for (i = 0; i < 3; i++)
+		{
+			valido = strcmp (usuarioValido[i].usuario, username) ||
+									strcmp (usuarioValido[i].clave, password); 
+			if (valido == 0) break;
+		}
+	return valido;
+}
+
 
 void buscar(Corredores *corredores)
 {
@@ -254,23 +301,23 @@ void ordenar (Corredores *corredores, int last_dorsal)
     {
 		if (corredores[j].tiempo.horas > corredores[j+1].tiempo.horas)
 		{
-            aux = corredores[j].tiempo.horas;
-            corredores[j].tiempo.horas = corredores[j+1].tiempo.horas;
-            corredores[j+1].tiempo.horas = aux;
+           		 aux = corredores[j].tiempo.horas;
+          		  corredores[j].tiempo.horas = corredores[j+1].tiempo.horas;
+           		 corredores[j+1].tiempo.horas = aux;
 		}
-    	else if (corredores[j].tiempo.horas == corredores[j+1].tiempo.horas)
+    		else if (corredores[j].tiempo.horas == corredores[j+1].tiempo.horas)
 		{
 			if(corredores[j].tiempo.mins > corredores[j+1].tiempo.mins)
 			{
-    		    aux = corredores[j].tiempo.mins;
-                corredores[j].tiempo.mins = corredores[j+1].tiempo.mins;
-                corredores[j+1].tiempo.mins = aux;;    
+    		  	   aux = corredores[j].tiempo.mins;
+             		   corredores[j].tiempo.mins = corredores[j+1].tiempo.mins;
+            		   corredores[j+1].tiempo.mins = aux;;    
 			}
 			else if(corredores[j].tiempo.mins == corredores[j+1].tiempo.mins)
 			{
 				if(corredores[j].tiempo.segundos > corredores[j+1].tiempo.segundos)
 				{
-	    			aux = corredores[j].tiempo.segundos;
+	    				aux = corredores[j].tiempo.segundos;
 					corredores[j].tiempo.segundos = corredores[j+1].tiempo.segundos;
 					corredores[j+1].tiempo.segundos = aux;;		  
 				}
@@ -297,7 +344,7 @@ void clasificaciones(Corredores *corredores, int last_dorsal)
 	{
 		if (corredores[i].dorsal != 0)
 		{
-    		printf("\n\t\t-%dº -> dorsal: %d ", i+1, corredores[i].dorsal);			
+    			printf("\n\t\t-%dº -> dorsal: %d ", i+1, corredores[i].dorsal);			
 		}	
 		else if (corredores[i].dorsal == 0)
 		{
@@ -317,6 +364,9 @@ void imprimir_tiempos(Corredores *corredores, int last_dorsal)
 {
 	FILE *f;
 	int i;
+	Tcontrasenna autorizado [3], acceso;
+	strcpy (autorizado[0].usuario, "admin1"); strcpy (autorizado[1].usuario, "admin2"); strcpy (autorizado[2].usuario, "admin3");
+	
 	f=fopen("tiempo.txt","w");
 	
 	if( f==NULL ) 
@@ -331,14 +381,19 @@ void imprimir_tiempos(Corredores *corredores, int last_dorsal)
 			if (corredores[i].dorsal!=0)
 			{
 				fprintf(f,"\n%d h : ", corredores[i].tiempo.horas);
-		    	fprintf(f,"%d min : ", corredores[i].tiempo.mins);
-		    	fprintf(f,"%d s\n", corredores[i].tiempo.segundos);
+		    		fprintf(f,"%d min : ", corredores[i].tiempo.mins);
+		    		fprintf(f,"%d s\n", corredores[i].tiempo.segundos);
 			}
-		    else if(corredores[i].dorsal==0)
-		    {
+		  	  else if(corredores[i].dorsal==0)
+		 	 {
 				fprintf(f,"(Corredor eliminado)\n");		    	
-			}
+			 }
 		}
+		for (i = 0; i < 1; i++)
+		{
+			fprintf(f,"\n\tEl usuario que ha modificado el programa ha sido: %s", autorizado[i].usuario);
+		}
+		
 	}
 	fclose(f);
 }
